@@ -1,0 +1,86 @@
+{
+    "Caries": {
+      "Remedies": [
+        "Brush twice daily using fluoride toothpaste.",
+        "Rinse mouth with an antibacterial mouthwash.",
+        "Avoid sugary and acidic foods and beverages."
+      ],
+      "Precautions": [
+        "Maintain regular oral hygiene practices.",
+        "Floss daily to remove food particles between teeth.",
+        "Visit the dentist for routine checkups."
+      ],
+      "DoctorSuggestions": [
+        "Dental filling or crown to restore decayed areas.",
+        "Root canal treatment if the decay has reached the pulp.",
+        "Professional fluoride treatment to strengthen teeth."
+      ]
+    },
+    "Gingivitis": {
+      "Remedies": [
+        "Use an antiseptic mouthwash to reduce bacteria.",
+        "Massage gums gently with a soft-bristled toothbrush.",
+        "Apply a saltwater rinse to reduce inflammation."
+      ],
+      "Precautions": [
+        "Maintain proper brushing and flossing habits.",
+        "Avoid smoking and other tobacco products.",
+        "Consume a balanced diet rich in vitamins and minerals."
+      ],
+      "DoctorSuggestions": [
+        "Professional dental cleaning to remove plaque and tartar.",
+        "Scaling and root planing to clean teeth below the gum line.",
+        "Antibiotics for severe cases of gum infection."
+      ]
+    },
+    "Hypodontia": {
+      "Remedies": [
+        "Maintain good oral hygiene to protect existing teeth.",
+        "Use fluoride treatments to strengthen remaining teeth."
+      ],
+      "Precautions": [
+        "Consider orthodontic evaluations early in life.",
+        "Avoid hard foods that can damage remaining teeth."
+      ],
+      "DoctorSuggestions": [
+        "Dental implants or bridges to replace missing teeth.",
+        "Orthodontic treatment to align teeth properly.",
+        "Regular monitoring and customized treatment plans."
+      ]
+    },
+    "Mouth_ulcer": {
+      "Remedies": [
+        "Apply a gel or cream containing benzocaine for pain relief.",
+        "Rinse with a mixture of warm water and salt or baking soda.",
+        "Use over-the-counter medications to reduce inflammation."
+      ],
+      "Precautions": [
+        "Avoid spicy and acidic foods that can irritate ulcers.",
+        "Stay hydrated to promote healing.",
+        "Maintain a balanced diet rich in essential nutrients."
+      ],
+      "DoctorSuggestions": [
+        "Topical steroid treatment for persistent ulcers.",
+        "Oral medication for recurring or severe cases.",
+        "Tests to identify underlying conditions if ulcers persist."
+      ]
+    },
+    "Tooth_discoloration": {
+      "Remedies": [
+        "Brush teeth with a whitening toothpaste.",
+        "Use home remedies like baking soda and hydrogen peroxide (with caution).",
+        "Avoid stain-causing foods and drinks such as coffee and red wine."
+      ],
+      "Precautions": [
+        "Quit smoking or using tobacco products.",
+        "Rinse your mouth after consuming stain-causing foods.",
+        "Maintain regular dental hygiene practices."
+      ],
+      "DoctorSuggestions": [
+        "Professional teeth whitening treatments.",
+        "Dental veneers for severe discoloration.",
+        "Scaling and polishing to remove surface stains."
+      ]
+    }
+  }
+  
