@@ -1,72 +1,84 @@
 import streamlit as st
 import os
 from PIL import Image
-import requests
 import time
-
-# Loading json
-import json
-with open('solutions.json', 'r') as file:
-    solutions = json.load(file)
-
-st.header(':orange[ORANN-V1]')
-st.write('ORANN-V1 is an AI model that can make predictions about your oral health very precisely and accurately by harnessing the power of CNN models and NLP models. :green[Make sure to enter all the personal information given on the left sidebar before proceeding.]')
-
-
-with st.sidebar:
-    phone = st.text_input(label='Phone number here', value="+91")
-    name = st.text_input(label='Enter your name here', value='Name here')
-    age = st.slider(label='What is your age?', min_value=5, max_value=80, value=5)          
-    address = st.text_input(label='Enter your address here', value='Address here')
-    gender = st.radio(label="Choose your gender", options=['Male', 'Female'], index=None)
-
-    st.write("Refresh the page, if you want to clear the entries.")
-
-problem_description = st.text_area(
-    "Enter your text below: (Required!!)", 
-    value="Describe your problem here (Max 300 chars)", 
-    height=150, 
-    max_chars=300
-)
-    
-uploaded_image = st.file_uploader(label='Upload an image of your teeth', type=['jpg', 'jpeg', 'png'])
+import requests
 
 temp_folder = "temp_files"
 os.makedirs(temp_folder, exist_ok=True)
 
-if uploaded_image and problem_description!= "Describe your problem here (Max 300 chars)":
-    check_btn = st.button(label='Check results', type='primary')
+if 'info_submit_status' not in st.session_state:
+    st.session_state.info_submit_status = False
 
-    if check_btn:
 
-        image = Image.open(uploaded_image)
-        st.image(image, caption="Uploaded Image", use_column_width=False)
-        temp_file_path = os.path.join(temp_folder, "temp_image.jpg")
-        image.save(temp_file_path)
-
-        with st.spinner(text='Model is analysing, wait for a few seconds'):
-            time.sleep(3)
-            api_url = "http://127.0.0.1:5000/predict"  # Replace with your deployed Flask API URL
-            with open(temp_file_path, 'rb') as file:
-                response = requests.post(api_url, files={'file': file})
-
-            if response.status_code == 200:
-                result = response.json()
-                st.markdown("#### :orange[Predictions done by the cnn pipeline:]")
-                st.write(result)
-            else:
-                st.write('Some error occured!')
-        
-        # Solutions from the json
-        specific_sol = solutions[result['EFFNET']]
-        # st.write(specific_sol)
-
-        st.markdown('#### :orange[Solutions:]')
-        for key in specific_sol:
-            time.sleep(0.25)
-            st.write(f"▶️  {key}:")
-            time.sleep(0.25)
-            for index, sentence in enumerate(specific_sol[key]):
-                st.write(f"{index+1}. {sentence}")
-
+with st.sidebar:
+    name = st.text_input("Enter your name:")
+    age = st.number_input("Enter your age:")
+    address = st.text_input("Enter address:")
+    phone = st.text_input("Enter phone number:")
+    gender = st.radio(label="Choose your gender:",
+                    options=["Male", "Female", "Others"])
     
+    submit = st.button(label="Submit information")
+    if submit:
+        if name and age and address and phone and gender:
+            st.session_state.info_submit_status = True
+            st.success("Information successfully submited!")
+        else:
+            st.warning("Enter all the fields in order to proceed!")
+    
+tab1, tab2 = st.tabs(tabs=["Patient portal", "Doctor's dashboard"])
+with tab1:
+    uploaded_image = st.file_uploader(label='Upload an image of your teeth', type=['jpg', 'jpeg', 'png'])
+    description = st.text_area(
+        label="Describe your problem here(Max 300 characters)"
+    )
+
+    check_results = st.button(label="Check results", type="primary")
+    if check_results:
+        if st.session_state.info_submit_status:
+            # st.write("All information submitted and code here will work")
+            if uploaded_image and description:
+                image = Image.open(uploaded_image)
+                st.image(image, caption="Uploaded Image", use_column_width=False)
+                temp_file_path = os.path.join(temp_folder, "temp_image.jpg")
+                image.save(temp_file_path)
+
+                with st.spinner(text='Model is analysing, wait for a few seconds'):
+                    time.sleep(3)
+                    api_url = "http://127.0.0.1:5000/predict"  # Replace with your deployed Flask API URL
+                    with open(temp_file_path, 'rb') as file:
+                        response = requests.post(api_url, files={'file': file})
+                
+                # columns
+                c1, c2 = st.columns(2)
+                # ----
+
+                if response.status_code == 200:
+                    result = response.json()
+                    with c1:
+                        st.write("Prediction done by cnn models:")
+                        st.write(result)
+                else:
+                    st.warning('Some error occured in the cnn model pipeline!')
+
+                nlp_api_url = f"http://127.0.0.1:8000/text-classify/{description}"
+                try:
+                    response = requests.get(nlp_api_url).json()
+                    with c2:
+                        st.write("Symptopms extracted by nlp model:")
+                        st.write(response)
+                except:
+                    st.warning("Some error occured in the nlp model api!")
+            else:
+                st.warning("Enter both the description and upload the image if you want to make the AI system examine your problem.")
+                
+        else:
+            st.warning("First fill all the information on the sidebar given on the left in order to make the AI system examine your problem!")
+
+with tab2:
+    st.write("Doctor's login here...")
+    st.write("This part is under development!")
+    
+
+
