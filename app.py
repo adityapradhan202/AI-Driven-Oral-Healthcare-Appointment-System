@@ -6,6 +6,7 @@ import requests
 
 # Import for db connectivity
 from dbutils import appreqs, dbread
+from apputils.typewriter_effect import stream_data
 
 temp_folder = "temp_files"
 os.makedirs(temp_folder, exist_ok=True)
@@ -75,6 +76,9 @@ with tab1:
                         st.write(response2)
                 except:
                     st.warning("Some error occured in the nlp model api!")
+
+                # Giving suggestions using typewriter effect
+                st.write_stream(stream_data(category=result['EFFNET']))
 
                 # DB connectivity here!!
                 appreqs.new_request(
